@@ -5,9 +5,26 @@ const knex = require('knex');
 const knexConfig = require('../knexfile')
 
 const db = knex(knexConfig.development);
+const Users = require('../data/model');
+
+const bcrypt = require('bcryptjs');
+
 
 router.post('/register', (req, res) => {
-    res.send('register');
+    let user = req.body;
+    const hash = bcrypt.hashSync(user.password, 12);
+    user.password = hash;
+
+    Users.add(user)
+            .then(success => {
+                delete success.password;
+
+                res.status(201).json(success);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            })
 })
 
 router.post('/login', (req, res) => {

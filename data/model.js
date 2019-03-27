@@ -3,28 +3,34 @@ const knexConfig = require('../knexfile')
 
 const db = knex(knexConfig.development);
 
+
+const add = async user => {
+    const [id] = await db('users')
+                        .insert(user);
+
+    return findByID(id);
+}
+
+const find = () => {
+    return db('users')
+            .select('*');
+}
+
+const findBy = filter => {
+    return db('users')
+            .where(filter);
+}
+
+const findByID = id => {
+    return db('users')
+            .where({ id })
+            .first();
+}
+
 module.exports = {
-    add: user => {
-        const [id] = await db('users')
-                            .insert(user);
-
-        return findByID(id);
-    },
-
-    find: () => {
-        return db('users')
-                .select('*');
-    },
-
-    findBy: filter => {
-        return db('users')
-                .where(filter);
-    },
-
-    findByID: id => {
-        return db('users')
-                .where({ id })
-                .first();
-    }
+    add,
+    find,
+    findBy,
+    findByID
 }
 

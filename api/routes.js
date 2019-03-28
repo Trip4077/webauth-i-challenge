@@ -28,7 +28,20 @@ router.post('/register', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-    res.send('login');
+    const { username, password } = req.body;
+
+    Users.findBy({ username })
+        .first()
+        .then(user => {
+            if(user && bcrypt.compareSync(password, user.password)) {
+                res.status(200).json({ message: `${username} logged in` });
+            } else {
+                res.status(401).json({ message: "You Shall NOT Pass" });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({ error: err, message: "You SHALL Not Pass" })
+        });
 })
 
 router.get('/users', (req, res) => {

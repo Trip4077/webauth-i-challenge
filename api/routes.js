@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const knex = require('knex');
-const knexConfig = require('../knexfile')
-
-const db = knex(knexConfig.development);
 const Users = require('../data/model');
 
 const bcrypt = require('bcryptjs');
+const mw = require('./middleware');
 
 
 router.post('/register', (req, res) => {
@@ -44,8 +41,14 @@ router.post('/login', (req, res) => {
         });
 })
 
-router.get('/users', (req, res) => {
-    res.send('users');
+router.get('/users', mw.restrict, (req, res) => {
+    Users.find()
+        .then(users => {
+            res.status(200).json(users);
+        })
+        .catch(err => {
+            res.status(500).json({ err: err, message: "YOU Shall Not Pass"})
+        })
 })
 
 module.exports = router;

@@ -1,8 +1,4 @@
-const knex = require('knex');
-const knexConfig = require('../knexfile')
-
-const db = knex(knexConfig.development);
-
+const db = require('./dbConfig');
 
 const add = async user => {
     const [id] = await db('users')

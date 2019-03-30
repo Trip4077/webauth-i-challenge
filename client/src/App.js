@@ -49,10 +49,10 @@ class App extends Component {
 
     axios.post('http://localhost:4567/api/login', user)
     .then(res => {
-      console.log(res.data);
-
+      console.log(res);
       axios.defaults.headers.common['username'] = user.username;
       axios.defaults.headers.common['password'] = user.password;
+      //axios.defaults.withCredentials = true;
 
       this.getUserList();
     })

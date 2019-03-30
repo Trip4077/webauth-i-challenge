@@ -30,6 +30,8 @@ const sessionConfig = {
                 }),
 }
 
+console.log(sessionConfig.store)
+
 server.use(session(sessionConfig));
 server.use(express.json(), helmet(), cors(), logger('dev'));
 

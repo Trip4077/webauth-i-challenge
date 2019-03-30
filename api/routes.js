@@ -45,7 +45,7 @@ router.post('/login', (req, res) => {
 })
 
 router.get('/users', mw.restrict, (req, res) => {
-    console.log(req);
+    console.log(res);
     Users.find()
         .then(users => {
             res.status(200).json(users);

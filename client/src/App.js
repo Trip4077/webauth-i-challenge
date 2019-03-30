@@ -52,7 +52,7 @@ class App extends Component {
       console.log(res);
       axios.defaults.headers.common['username'] = user.username;
       axios.defaults.headers.common['password'] = user.password;
-      //axios.defaults.withCredentials = true;
+      axios.defaults.withCredentials = true;
 
       this.getUserList();
     })
@@ -70,6 +70,10 @@ class App extends Component {
         .catch(err => {
           console.log(err);
         })
+  }
+
+  componentDidMount() {
+    this.getUserList();
   }
 
   render() {

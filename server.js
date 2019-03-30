@@ -30,10 +30,13 @@ const sessionConfig = {
                 }),
 }
 
-console.log(sessionConfig.store)
+const corsConfig = {
+    origin: 'http://localhost:3000', 
+    credentials: true
+}
 
 server.use(session(sessionConfig));
-server.use(express.json(), helmet(), cors(), logger('dev'));
+server.use(express.json(), helmet(), cors(corsConfig), logger('dev'));
 
 server.use('/api', routes);
 
